@@ -13,7 +13,7 @@ export interface IssueProps {
 }
 
 export interface RepositoryProps {
-  id: number,
+  id: number;
   full_name: string;
   owner: {
     avatar_url: string;
@@ -24,7 +24,7 @@ export interface RepositoryProps {
   open_issues_count: number;
   issues_url: string;
 
-  issues: IssueProps[]
+  issues: IssueProps[];
 }
 
 interface RepositoriesContextData {
@@ -38,53 +38,73 @@ interface RepositoriesProviderProps {
   children: React.ReactNode;
 }
 
-const RepositoriesContext = createContext<RepositoriesContextData>({} as RepositoriesContextData);
+const RepositoriesContext = createContext<RepositoriesContextData>(
+  {} as RepositoriesContextData,
+);
 
 function RepositoriesProvider({ children }: RepositoriesProviderProps) {
   const [repositories, setRepositories] = useState<RepositoryProps[]>([]);
 
   async function addRepository(repositoryName: string) {
     try {
-      const repoAlreadyExists = repositories.find(repository => repository.full_name === repositoryName);
+      const repoAlreadyExists = repositories.find(
+        repository => repository.full_name === repositoryName,
+      );
 
       if (repoAlreadyExists) {
         return Alert.alert(
-          "Erro ao cadastrar repositório",
-          "Esse repositório já está cadastrado."
+          'Erro ao cadastrar repositório',
+          'Esse repositório já está cadastrado.',
         );
       }
 
-      const response = await api.get<RepositoryProps>(`repos/${repositoryName}`);
-      const { data: issues } = await api.get<IssueProps[]>(`repos/${repositoryName}/issues`);
-      setRepositories([...repositories, {
-        ...response.data,
-        issues
-      }]);
+      const response = await api.get<RepositoryProps>(
+        `repos/${repositoryName}`,
+      );
+      const { data: issues } = await api.get<IssueProps[]>(
+        `repos/${repositoryName}/issues`,
+      );
+      setRepositories([
+        ...repositories,
+        {
+          ...response.data,
+          issues,
+        },
+      ]);
     } catch (error) {
       Alert.alert(
-        "Erro",
-        "Ocorreu um erro ao buscar pelo repositório. Verifique a sua conexão e o nome do repositório e tente novamente."
-      )
+        'Erro',
+        'Ocorreu um erro ao buscar pelo repositório. Verifique a sua conexão e o nome do repositório e tente novamente.',
+      );
     }
   }
 
   function findRepositoryById(repositoryId: number) {
-    return repositories.find(repository => repository.id === repositoryId) as RepositoryProps;
+    return repositories.find(
+      repository => repository.id === repositoryId,
+    ) as RepositoryProps;
   }
 
   function removeRepository(repositoryId: number) {
-    const filteredRepositories = repositories.filter(repository =>
-      repository.id !== repositoryId
+    const filteredRepositories = repositories.filter(
+      repository => repository.id !== repositoryId,
     );
 
     setRepositories(filteredRepositories);
   }
 
   return (
-    <RepositoriesContext.Provider value={{ repositories, addRepository, removeRepository, findRepositoryById }}>
+    <RepositoriesContext.Provider
+      value={{
+        repositories,
+        addRepository,
+        removeRepository,
+        findRepositoryById,
+      }}
+    >
       {children}
     </RepositoriesContext.Provider>
-  )
+  );
 }
 
-export { RepositoriesProvider, RepositoriesContext }
+export { RepositoriesProvider, RepositoriesContext };

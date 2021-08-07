@@ -11,9 +11,7 @@ interface BackgroundProps {
 export function Background({ children }: BackgroundProps) {
   return (
     <Container source={githubBg}>
-      <SafeAreaViewIOS>
-        {children}
-      </SafeAreaViewIOS>
+      <SafeAreaViewIOS>{children}</SafeAreaViewIOS>
     </Container>
-  )
+  );
 }

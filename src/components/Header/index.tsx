@@ -8,7 +8,7 @@ import {
   BackButton,
   Icon,
   BlankSpace,
-  SafeAreaViewIOS
+  SafeAreaViewIOS,
 } from './styles';
 
 interface HeaderProps {
@@ -29,7 +29,7 @@ export function Header({ goBack }: HeaderProps) {
           <BlankSpace />
         </Container>
       </SafeAreaViewIOS>
-    )
+    );
   }
 
   return (
@@ -38,5 +38,5 @@ export function Header({ goBack }: HeaderProps) {
         <Logo source={logoImg} />
       </Container>
     </SafeAreaViewIOS>
-  )
+  );
 }

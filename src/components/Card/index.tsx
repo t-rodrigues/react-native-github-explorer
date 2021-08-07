@@ -24,7 +24,7 @@ interface CardProps {
     title: string;
     subTitle: string;
     imageUrl?: string;
-  },
+  };
   onPress: () => void;
 }
 
@@ -35,29 +35,24 @@ export function Card({ data, onPress }: CardProps) {
 
   function handleDeleteAlert() {
     Alert.alert(
-      "Remover item",
-      "Você tem certeza que deseja remover esse repositório da lista?",
+      'Remover item',
+      'Você tem certeza que deseja remover esse repositório da lista?',
       [
         {
-          text: "Não",
+          text: 'Não',
           onPress: () => swipeableRef.current?.close(),
-          style: "cancel"
+          style: 'cancel',
         },
-        { text: "Sim", onPress: () => removeRepository(data.id) }
-      ]
+        { text: 'Sim', onPress: () => removeRepository(data.id) },
+      ],
     );
   }
 
   function CardContent() {
     return (
-      <CardContainer
-        hasImage={!!data.imageUrl}
-        onPress={onPress}
-      >
+      <CardContainer hasImage={!!data.imageUrl} onPress={onPress}>
         <Info>
-          {data.imageUrl && (
-            <Image source={{ uri: data.imageUrl }} />
-          )}
+          {data.imageUrl && <Image source={{ uri: data.imageUrl }} />}
 
           <TextGroup>
             <Title numberOfLines={1}>{data.title}</Title>
@@ -67,7 +62,7 @@ export function Card({ data, onPress }: CardProps) {
 
         <Icon name="chevron-right" size={20} />
       </CardContainer>
-    )
+    );
   }
 
   function SwipeableDelete() {
@@ -75,7 +70,7 @@ export function Card({ data, onPress }: CardProps) {
       <DeleteContainer>
         <DeleteIcon name="trash" size={24} />
       </DeleteContainer>
-    )
+    );
   }
 
   if (data.imageUrl) {
@@ -91,12 +86,12 @@ export function Card({ data, onPress }: CardProps) {
           <CardContent />
         </SwipeableContainer>
       </CardAnimation>
-    )
+    );
   }
 
   return (
     <CardAnimation>
       <CardContent />
     </CardAnimation>
-  )
+  );
 }

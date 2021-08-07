@@ -1,6 +1,6 @@
-import { useNavigation } from '@react-navigation/core';
 import React, { useRef, useState } from 'react';
 import { TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { Background } from '../../components/Background';
 import { Card } from '../../components/Card';
@@ -15,7 +15,7 @@ import {
   InputField,
   InputButton,
   Icon,
-  RepositoriesList
+  RepositoriesList,
 } from './styles';
 
 export function Dashboard() {
@@ -27,23 +27,15 @@ export function Dashboard() {
   const { addRepository, repositories } = useRepositories();
 
   function handleAddRepository() {
-    /**
-     * TODO: 
-     * - call addRepository function sending inputText value;
-     * - clean inputText value.
-     */
+    addRepository(inputText);
+    setInputText('');
     inputRef.current?.blur();
   }
 
   function handleRepositoryPageNavigation(id: number) {
-    /**
-     * TODO - navigate to the Repository screen sending repository id.
-     * Remember to use the correct prop name (repositoryId) to the repositoy id:
-     * 
-     * navigate(SCREEN NAME, {
-     *  repositoryId: id of the repository
-     * })
-     */
+    navigate('Repository', {
+      repositoryId: id,
+    });
   }
 
   return (
@@ -57,25 +49,17 @@ export function Dashboard() {
               ref={inputRef}
               placeholder="Digite aqui 'usuário/repositório'"
               value={inputText}
-              /**
-               * TODO - update inputText value when input text value 
-               * changes:
-               * onChangeText={YOUR CODE HERE}
-               */
+              onChangeText={text => setInputText(text.trim())}
               onSubmitEditing={handleAddRepository}
               returnKeyType="send"
-              autoCapitalize='none'
+              autoCapitalize="none"
               autoCorrect={false}
             />
 
             <InputButton
               testID="input-button"
               onPress={handleAddRepository}
-            /**
-             * TODO - ensure to disable button when inputText is 
-             * empty (use disabled prop to this):
-             * disabled={CONDITION HERE}
-             */
+              disabled={!inputText}
             >
               <Icon name="search" size={20} />
             </InputButton>
@@ -93,7 +77,7 @@ export function Dashboard() {
                 id: repository.id,
                 title: repository.full_name,
                 subTitle: repository.description,
-                imageUrl: repository.owner.avatar_url
+                imageUrl: repository.owner.avatar_url,
               }}
               onPress={() => handleRepositoryPageNavigation(repository.id)}
             />
@@ -101,5 +85,5 @@ export function Dashboard() {
         />
       </Container>
     </Background>
-  )
+  );
 }

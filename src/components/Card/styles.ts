@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components/native';
-import { Feather } from '@expo/vector-icons'
+import { Feather } from '@expo/vector-icons';
 import { Swipeable } from 'react-native-gesture-handler';
 
 interface CardContainerProps {
@@ -8,24 +8,26 @@ interface CardContainerProps {
 
 export const SwipeableContainer = styled(Swipeable).attrs({
   containerStyle: {
-    marginBottom: 12
-  }
+    marginBottom: 12,
+  },
 })``;
 
 export const CardContainer = styled.Pressable<CardContainerProps>`
   padding: 12px 18px;
-        
+
   border-radius: 5px;
 
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  background-color: #FFF;
+  background-color: #fff;
 
-  ${({ hasImage }) => !hasImage && css`
+  ${({ hasImage }) =>
+    !hasImage &&
+    css`
       margin-bottom: 12px;
-  `}
+    `}
 `;
 
 export const Info = styled.View`
@@ -68,11 +70,11 @@ export const DeleteContainer = styled.View`
   padding: 0 30px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  justify-content: center; 
-  align-items: flex-end; 
+  justify-content: center;
+  align-items: flex-end;
   background-color: red;
 `;
 
 export const DeleteIcon = styled(Feather)`
-  color: #FFF;
+  color: #fff;
 `;
